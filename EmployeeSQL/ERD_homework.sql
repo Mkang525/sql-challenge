@@ -83,7 +83,29 @@ WHERE hire_date LIKE '%1986'
 
 --List the manager of each department with the following information: department number, department name, the manager's employee number, last name, first name.
 
+SELECT employees.emp_no, employees.last_name, employees.first_name, dept_manager.dept_no
+FROM employees
+JOIN dept_manager
+ON (employees.emp_no = dept_manager.emp_no)
+WHERE dept_no IN 
+	(SELECT dept_no
+	FROM dept_manager);
+	
+CREATE VIEW manager AS
+SELECT employees.emp_no, employees.last_name, employees.first_name, dept_manager.dept_no
+FROM employees
+JOIN dept_manager
+ON (employees.emp_no = dept_manager.emp_no)
+WHERE dept_no IN 
+	(SELECT dept_no
+	FROM dept_manager);
 
+SELECT * FROM manager
+
+SELECT m.emp_no, m.last_name, m.first_name, m.dept_no, d.dept_name
+FROM manager as m
+JOIN departments as d
+ON (d.dept_no = m.dept_no)
 
 
 --List the department of each employee with the following information: employee number, last name, first name, and department name.
