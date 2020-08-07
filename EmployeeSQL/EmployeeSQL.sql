@@ -146,9 +146,17 @@ WHERE emp_no IN
 	WHERE first_name = 'Hercules'
 	AND last_name LIKE 'B%');
 
-
 --List all employees in the Sales department, including their employee number, last name, first name, and department name.
 
+CREATE VIEW table_emp AS
+SELECT em.emp_no, em.last_name, em.first_name, d.dept_name 
+FROM employee_info as em
+JOIN departments as d
+ON (em.dept_no = d.dept_no);
+
+SELECT *
+FROM table_emp
+WHERE dept_name = 'Sales'
 
 --List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
 
