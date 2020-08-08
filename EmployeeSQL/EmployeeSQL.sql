@@ -173,3 +173,32 @@ COUNT (last_name) AS last_name_count
 FROM employees
 GROUP BY last_name
 ORDER BY last_name_count DESC
+
+--BONUS: Average salary by title
+
+SELECT e.emp_no, e.emp_title, s.salaries
+FROM employees as e
+JOIN salaries as s
+ON (e.emp_no = s.emp_no)
+
+CREATE VIEW average_salary AS 
+SELECT e.emp_no, e.emp_title, s.salaries
+FROM employees as e
+JOIN salaries as s
+ON (e.emp_no = s.emp_no)
+
+
+CREATE VIEW name_title AS 
+SELECT emp_title,
+	ROUND(AVG(salaries),2) as avg_salary
+FROM average_salary
+GROUP BY emp_title;
+
+
+
+CREATE VIEW staff_avg_salary AS
+SELECT t.staff, nt.emp_title, nt.avg_salary
+FROM name_title AS nt
+JOIN titles as t
+ON (nt.emp_title=t.title_id)
+
